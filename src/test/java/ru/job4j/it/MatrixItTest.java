@@ -59,8 +59,12 @@ public class MatrixItTest {
     @Test
     public void whenEmpty() {
         int[][] in = {
+                {},
+                {},
+                {},
                 {}
         };
+
         MatrixIt it = new MatrixIt(in);
         assertThat(it.hasNext(), is(false));
     }
