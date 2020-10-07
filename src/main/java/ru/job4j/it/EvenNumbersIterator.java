@@ -13,9 +13,6 @@ public class EvenNumbersIterator implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        if (numbers.length == 1) {
-            return false;
-        }
         if (point < numbers.length - 1) {
             return (numbers[point + 1] % 2 == 0);
         }
@@ -30,16 +27,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
         if (numbers[point] % 2 != 0) {
             point++;
             return numbers[point++];
-        } else {
-            return numbers[point++];
         }
-
+        return numbers[point++];
     }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
-
 }
