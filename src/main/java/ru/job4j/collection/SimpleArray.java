@@ -9,7 +9,9 @@ public class SimpleArray<T> implements Iterable<T> {
     private int modCount;
     private int point = 0;
 
-
+    public void grow(Object[] array) {
+        Arrays.copyOf(array, (int)((array.length * 1.5) + 1));
+    }
 
     public T get(int index) {
         Objects.checkIndex(index, size);
@@ -18,7 +20,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public void add(T model) {
         if (size == container.length) {
-            Arrays.copyOf(container, (int)((container.length * 1.5) + 1));
+            grow(container);
         }
         container[size++] = model;
         modCount++;
