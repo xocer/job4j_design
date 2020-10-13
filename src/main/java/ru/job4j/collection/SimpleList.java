@@ -74,6 +74,3 @@ public class SimpleList<E> implements Iterable<E>{
         }
     }
 }
-
-
-
