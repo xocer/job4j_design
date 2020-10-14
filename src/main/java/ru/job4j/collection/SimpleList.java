@@ -76,18 +76,4 @@ public class SimpleList<E> implements Iterable<E>{
             this.next = next;
         }
     }
-
-    public static void main(String[] args) {
-        SimpleList<String> list = new SimpleList<>();
-        list.add("one");
-        list.add("two");
-        list.add("three");
-        list.add("four");
-
-        for (String s :
-                list) {
-            System.out.println(s);
-        }
-
-    }
 }
