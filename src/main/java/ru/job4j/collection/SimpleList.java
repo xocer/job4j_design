@@ -7,7 +7,7 @@ public class SimpleList<E> implements Iterable<E>{
     private int modCount = 0;
     private Node<E> first;
     private Node<E> last;
-    int count = 0;
+
 
     public void add(E value) {
         final Node<E> l = last;
@@ -40,8 +40,9 @@ public class SimpleList<E> implements Iterable<E>{
 
     @Override
     public Iterator<E> iterator() {
-
         return new Iterator<E>() {
+
+            Node<E> point = first;
 
             int expectedModCount = modCount;
 
@@ -50,7 +51,7 @@ public class SimpleList<E> implements Iterable<E>{
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return count < size;
+                return point != null;
             }
 
             @Override
@@ -58,7 +59,9 @@ public class SimpleList<E> implements Iterable<E>{
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (E) get(count++);
+                E result = point.element;
+                point = point.next;
+                return result;
             }
         };
     }
@@ -72,5 +75,19 @@ public class SimpleList<E> implements Iterable<E>{
             this.element = element;
             this.next = next;
         }
+    }
+
+    public static void main(String[] args) {
+        SimpleList<String> list = new SimpleList<>();
+        list.add("one");
+        list.add("two");
+        list.add("three");
+        list.add("four");
+
+        for (String s :
+                list) {
+            System.out.println(s);
+        }
+
     }
 }
