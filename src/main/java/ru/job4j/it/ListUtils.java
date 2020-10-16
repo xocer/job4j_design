@@ -63,15 +63,4 @@ public class ListUtils {
         }
         return list;
     }
-
-
-    public static void main(String[] args) {
-        List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
-        List<Integer> elements = new ArrayList<>(Arrays.asList(11, 2, 33, 4, 55, 65, 7));
-
-
-        list = removeAll(list, elements);
-        System.out.println(list);
-    }
-
 }
