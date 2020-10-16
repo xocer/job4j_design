@@ -5,11 +5,17 @@ import java.util.NoSuchElementException;
 
 public class ForwardLinked<T> implements Iterable<T> {
     private Node<T> head;
+    private int size;
+
+    public int getSize() {
+        return size;
+    }
 
     public void add(T value) {
         Node<T> node = new Node<T>(value, null);
         if (head == null) {
             head = node;
+            size++;
             return;
         }
         Node<T> tail = head;
@@ -17,11 +23,13 @@ public class ForwardLinked<T> implements Iterable<T> {
             tail = tail.next;
         }
         tail.next = node;
+        size++;
     }
 
     public void addFirst(T value) {
         Node<T> tmp = head;
         head = new Node<>(value, tmp);
+        size++;
     }
 
     public T deleteFirst() {
@@ -32,6 +40,7 @@ public class ForwardLinked<T> implements Iterable<T> {
         Node<T> tmp = head.next;
         head.next = null;
         head = tmp;
+        size--;
         return result;
     }
 
@@ -47,22 +56,25 @@ public class ForwardLinked<T> implements Iterable<T> {
         tmp.next = null;
         result = tail.value;
         tail.value = null;
+        size--;
 
         return result;
     }
 
     public void revert() {
-        Node<T> prev = null;
-        Node<T> middle = head;
-        Node<T> fol = middle.next;
-        while (fol != null) {
-            middle.next = prev;
-            prev = middle;
-            middle = fol;
-            fol = middle.next;
-            middle.next = prev;
+        if (getSize() > 1) {
+            Node<T> prev = null;
+            Node<T> middle = head;
+            Node<T> fol = middle.next;
+            while (fol != null) {
+                middle.next = prev;
+                prev = middle;
+                middle = fol;
+                fol = middle.next;
+                middle.next = prev;
+            }
+            head = middle;
         }
-        head = middle;
     }
 
     @Override
