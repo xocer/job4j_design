@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public class SimpleSet<T> implements Iterable<T> {
-    SimpleArray<T> simpleArray = new SimpleArray<>();
+    private SimpleArray<T> simpleArray = new SimpleArray<>();
 
     public boolean add(T model) {
         if (checkModel(model)) {
