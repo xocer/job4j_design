@@ -5,10 +5,6 @@ import java.util.*;
 public class SimpleArray<T> implements Iterable<T> {
     private transient Object[] container = new Object[10];
 
-    public Object[] getContainer() {
-        return container;
-    }
-
     public int getSize() {
         return size;
     }

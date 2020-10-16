@@ -15,7 +15,7 @@ public class SimpleSet<T> implements Iterable<T> {
 
     public boolean checkModel(T model) {
         for (int i = 0; i < simpleArray.getSize(); i++) {
-            if (Objects.equals(simpleArray.getContainer()[i], model)) {
+            if (Objects.equals(simpleArray.get(i), model)) {
                 return false;
             }
         }
