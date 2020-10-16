@@ -5,6 +5,11 @@ import java.util.*;
 public class SimpleArray<T> implements Iterable<T> {
 
     transient Object[] container = new Object[10];
+
+    public int getSize() {
+        return size;
+    }
+
     private int size;
     private int modCount;
     private int point = 0;
