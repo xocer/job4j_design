@@ -18,13 +18,14 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, children);
+        return Objects.hash(name, children, birthday);
     }
 
     public static void main(String[] args) {
         Map<User, Object> map = new HashMap<User, Object>();
-        User user1 = new User("Bob", 2, Calendar.getInstance());
-        User user2 = new User("Bob", 2, Calendar.getInstance());
+        Calendar calendar = Calendar.getInstance();
+        User user1 = new User("Bob", 2, calendar);
+        User user2 = new User("Bob", 2, calendar);
         map.put(user1, new Object());
         map.put(user2, new Object());
         for (Map.Entry<User, Object> q : map.entrySet()) {
