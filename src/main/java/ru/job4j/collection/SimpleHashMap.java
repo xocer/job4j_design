@@ -15,14 +15,19 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
         }
     }
 
-    public int getIndex(K key, Node<K, V>[] array) {
+    public int getIndex(K key) {
         return key.hashCode() & (array.length - 1);
+    }
+
+    public boolean checkKey(K key) {
+        int index = getIndex(key);
+        return key.equals(array[index].key);
     }
 
     public boolean insert(K key, V value) {
         checkSize();
-        int index = getIndex(key, array);
-        if (array[index] != null) {
+        int index = getIndex(key);
+        if (array[index] != null || checkKey(key)) {
             return false;
         }
         array[index] = new Node(key, value);
@@ -31,13 +36,13 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
     }
 
     V get(K key) {
-        int index = getIndex(key, array);
-        return array[index].value;
+        int index = getIndex(key);
+        return checkKey(key) ? array[index].value : null;
     }
 
     boolean delete(K key) {
-        int index = getIndex(key, array);
-        if (array[index] == null) {
+        int index = getIndex(key);
+        if (array[index] == null || !checkKey(key)) {
             return false;
         }
         array[index] = null;
