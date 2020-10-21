@@ -2,16 +2,16 @@ package ru.job4j.collection;
 
 import java.util.*;
 
-public class SimpleHashMap<K, V> implements Iterator<V> {
-    private int capacity = 16;
-    private Node<K, V>[] array = new Node[capacity];
+public class SimpleHashMap<K, V> implements Iterable<V> {
+
+    private Node<K, V>[] array = new Node[16];
     private int size;
     private int count = 0;
     private double loadFactor = 0.75;
 
     public void checkSize() {
-        if (capacity * loadFactor <= size) {
-            array = Arrays.copyOf(array, capacity = capacity * 2);
+        if (array.length * loadFactor <= size) {
+            array = Arrays.copyOf(array, array.length * 2);
         }
     }
 
@@ -46,20 +46,27 @@ public class SimpleHashMap<K, V> implements Iterator<V> {
     }
 
 
-    @Override
-    public boolean hasNext() {
-        while (count < array.length && array[count] == null) {
-            count++;
-        }
-        return count < array.length;
-    }
+
 
     @Override
-    public V next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        return array[count++].value;
+    public Iterator<V> iterator() {
+        return new Iterator<V>() {
+            @Override
+            public boolean hasNext() {
+                while (count < array.length && array[count] == null) {
+                    count++;
+                }
+                return count < array.length;
+            }
+
+            @Override
+            public V next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return array[count++].value;
+            }
+        };
     }
 
     class Node<K, V> {
