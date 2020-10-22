@@ -9,17 +9,17 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
     private int count = 0;
     private double loadFactor = 0.75;
 
-    public void checkSize() {
+    private void checkSize() {
         if (array.length * loadFactor <= size) {
             array = Arrays.copyOf(array, array.length * 2);
         }
     }
 
-    public int getIndex(K key) {
+    private int getIndex(K key) {
         return key.hashCode() & (array.length - 1);
     }
 
-    public boolean checkKey(K key) {
+    private boolean checkKey(K key) {
         int index = getIndex(key);
         return key.equals(array[index].key);
     }
@@ -35,12 +35,15 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
         return true;
     }
 
-    V get(K key) {
+    public V get(K key) {
         int index = getIndex(key);
+        if (array[index] == null) {
+            return null;
+        }
         return checkKey(key) ? array[index].value : null;
     }
 
-    boolean delete(K key) {
+    public boolean delete(K key) {
         int index = getIndex(key);
         if (array[index] == null || !checkKey(key)) {
             return false;
@@ -49,9 +52,6 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
         size--;
         return true;
     }
-
-
-
 
     @Override
     public Iterator<V> iterator() {
