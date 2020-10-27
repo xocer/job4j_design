@@ -1,4 +1,4 @@
-package ru.job4j.input_output;
+package ru.job4j.io;
 
 import java.io.FileOutputStream;
 
