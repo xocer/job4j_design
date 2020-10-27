@@ -3,6 +3,7 @@ package ru.job4j.tree;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.Set;
 
 public class Tree<E> implements SimpleTree<E> {
     private final Node<E> root;
