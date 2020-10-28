@@ -13,9 +13,9 @@ public class MultiplicationTable {
         try (FileOutputStream fos = new FileOutputStream("result")) {
             for (int i = 1; i < q; i++) {
                 for (int j = 1; j < a; j++) {
-                    fos.write((i + " * " + j + " = " + i * j + "\n").getBytes());
+                    fos.write((i + " * " + j + " = " + i * j + System.lineSeparator()).getBytes());
                 }
-                fos.write("\n".getBytes());
+                fos.write(System.lineSeparator().getBytes());
             }
         } catch (Exception e) {
             e.printStackTrace();
