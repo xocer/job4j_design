@@ -1,51 +1,32 @@
 package ru.job4j.collection;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Analize {
 
     public Info diff(List<User> previous, List<User> current) {
+        int added = 0;
+        int changed = 0;
+        int deleted = 0;
 
         if (previous.size() == 0 || current.size() == 0) {
             throw new NoSuchElementException();
         }
-
-        int added = 0;
-        int changed = 0;
-        int deleted = 0;
-        User prev;
-        User curr;
-
-        for (int i = 0; i < previous.size(); i++) {
-            prev = previous.get(i);
-            for (int j = 0; j < current.size(); j++) {
-                curr = current.get(j);
-
-                if (current.contains(prev)) {
-                    break;
-                }
-
-                if (prev.id == curr.id && !prev.equals(curr)) {
-                    changed++;
-                    break;
-                }
-
-                if (j == current.size() - 1) {
-                    deleted++;
-                }
-            }
-        }
-
+        Map<Integer, String> users = previous.stream().collect(Collectors.toMap(User::getId, User::getName));
         for (int i = 0; i < current.size(); i++) {
-            curr = current.get(i);
-            if (!previous.contains(curr)) {
+            int id = current.get(i).getId();
+            if (!users.containsKey(id)) {
                 added++;
+            } else {
+                if (!users.get(id).equals(current.get(i).getName())) {
+                    changed++;
+                }
             }
         }
+        deleted = previous.size() + added - current.size();
 
-        return new Info(added - changed, changed, deleted);
+        return new Info(added, changed, deleted);
     }
 
     public static class User {
@@ -55,6 +36,14 @@ public class Analize {
         public User(int id, String name) {
             this.id = id;
             this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
         }
 
         @Override
@@ -106,6 +95,15 @@ public class Analize {
                     ", deleted=" + deleted +
                     '}';
         }
+    }
+
+    public static void main(String[] args) {
+        List<User> previos = List.of(new User(1, "Вася"), new User(2, "Петя"), new User(3, "Игнат"), new User(4, "Максим"));
+        List<User> current = List.of(new User(1, "Вася"), new User(2, "Даша"), new User(15, "Саша"), new User(19, "Володя"));
+
+        Analize analize = new Analize();
+        Info info = analize.diff(previos, current);
+        System.out.println(info);
     }
 
 }
