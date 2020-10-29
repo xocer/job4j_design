@@ -17,8 +17,11 @@ public class Config {
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             while (read.ready()) {
-                String[] s = read.readLine().split("=");
-                values.put(s[0], s[1]);
+                String tmp = read.readLine();
+                if (!tmp.startsWith("#") && !tmp.isEmpty()) {
+                    String[] s = tmp.split("=");
+                    values.put(s[0], s[1]);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
