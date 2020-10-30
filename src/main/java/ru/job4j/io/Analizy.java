@@ -7,34 +7,30 @@ import java.util.stream.Collectors;
 
 public class Analizy {
     public void unavailable(String source, String target) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(target))) {
-            List<String> list = getList(source);
+        try (BufferedReader reader = new BufferedReader(new FileReader(source));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(target))) {
+            List<String> list = new ArrayList<>();
             boolean flag = false;
-            for (int i = 0; i < list.size(); i++) {
-                String[] s = list.get(i).split(" ");
+            while (reader.ready()) {
+                String tmp = reader.readLine();
+                if (!tmp.isEmpty()) {
+                    String[] s = tmp.split(" ");
+                    if ((s[0].equals("200") || s[0].equals("300")) && flag) {
+                        list.add(s[1] + System.lineSeparator());
+                        flag = false;
 
-                if ((s[0].equals("200") || s[0].equals("300")) && flag) {
-                    writer.write(s[1] + System.lineSeparator());
-                    flag = false;
-
-                } else if ((s[0].equals("400") || s[0].equals("500")) && !flag) {
-                    writer.write(s[1] + ";");
-                    flag = true;
+                    } else if ((s[0].equals("400") || s[0].equals("500")) && !flag) {
+                        list.add(s[1] + ";");
+                        flag = true;
+                    }
                 }
+            }
+            for (String s : list) {
+                writer.write(s);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private List<String> getList(String source) {
-        List<String> list = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(source))){
-            list = reader.lines().filter(x -> !x.isEmpty()).collect(Collectors.toList());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
     }
 
     public static void main(String[] args) {
