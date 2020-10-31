@@ -3,13 +3,26 @@ package ru.job4j.io;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Analizy {
     public void unavailable(String source, String target) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(source));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(target))) {
-            List<String> list = new ArrayList<>();
+        List<String> list = getList(source);
+        writeFile(list, target);
+    }
+
+    private void writeFile(List<String> list, String target) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(target))) {
+            for (String s : list) {
+                writer.write(s);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<String> getList(String source) {
+        List<String> list = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
             boolean flag = false;
             while (reader.ready()) {
                 String tmp = reader.readLine();
@@ -25,12 +38,10 @@ public class Analizy {
                     }
                 }
             }
-            for (String s : list) {
-                writer.write(s);
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return list;
     }
 
     public static void main(String[] args) {
