@@ -6,71 +6,48 @@ import java.util.stream.Stream;
 
 public class Mail {
 
-    public static class User {
-        private String name;
-        private Set<String> mail;
-
-        @Override
-        public String toString() {
-            return "User{" +
-                    "name='" + name + '\'' +
-                    ", mail=" + mail +
-                    '}';
+    public Map<String, List<String>> mergerMail(Map<String, List<String>> users) {
+        if (users.isEmpty()) {
+            throw new NoSuchElementException();
         }
+        Map<String, String> emailAndUser = new HashMap<>();
+        Map<String, String> userAndUser = new HashMap<>();
 
-        public User(String name, Set<String> eMail) {
-            this.name = name;
-            this.mail = eMail;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setMail(Set<String> mail) {
-            this.mail = mail;
-        }
-
-        public Set<String> getMail() {
-            return mail;
-        }
-    }
-
-    public List<User> mergerMail(List<User> users) {
-        if (users != null) {
-            for (int i = 0; i < users.size(); i++) {
-                for (int j = i + 1; j < users.size(); j++) {
-                    Set<String> one = users.get(i).getMail();
-                    Set<String> two = users.get(j).getMail();
-                    if (!Collections.disjoint(one, two)) {
-                        users.get(i).setMail(Stream.concat(one.stream(), two.stream()).collect(Collectors.toSet()));
-                        users.remove(j--);
-                    }
+        for (Map.Entry<String, List<String>> entry : users.entrySet()) {
+            String user = entry.getKey();
+            for (String mail : entry.getValue()) {
+                String otherUser = emailAndUser.putIfAbsent(mail, user);
+                if (otherUser != null) {
+                    userAndUser.put(user, Optional.ofNullable(userAndUser.get(otherUser)).orElse(otherUser));
                 }
             }
         }
-        return users;
+        Map<String, List<String>> result = new HashMap<>();
+        for (Map.Entry<String, String> entry : emailAndUser.entrySet()) {
+            String key = Optional.ofNullable(userAndUser.get(entry.getValue())).orElse(entry.getValue());
+            String value = entry.getKey();
+            if (result.containsKey(key)) {
+                result.get(key).add(value);
+            } else {
+                List<String> tmp = new ArrayList<>();
+                tmp.add(value);
+                result.put(key, tmp);
+            }
+        }
+        return result;
     }
 
     public static void main(String[] args) {
-        User user1 = new User("user1", Set.of("xxx@ya.ru", "foo@gmail.com", "lol@mail.ru"));
-        User user2 = new User("user2", Set.of("foo@gmail.com", "ups@pisem.net"));
-        User user3 = new User("user3", Set.of("xyz@pisem.net", "vasya@pupkin.com"));
-        User user4 = new User("user4", Set.of("ups@pisem.net", "aaa@bbb.ru"));
-        User user5 = new User("user5", Set.of("xyz@pisem.net"));
+        Map<String, List<String>> input = new HashMap<>();
 
-        List<User> list = new ArrayList<>();
-        list.add(user1);
-        list.add(user2);
-        list.add(user3);
-        list.add(user4);
-        list.add(user5);
+        input.put("user1", List.of("xxx@ya.ru", "foo@gmail.com", "lol@mail.ru"));
+        input.put("user2", List.of("foo@gmail.com", "ups@pisem.net"));
+        input.put("user3", List.of("xyz@pisem.net", "vasya@pupkin.com"));
+        input.put("user4", List.of("ups@pisem.net", "aaa@bbb.ru"));
+        input.put("user5", List.of("xyz@pisem.net"));
 
         Mail mail = new Mail();
-        List<User> array = mail.mergerMail(list);
-        for (User s :
-                array) {
-            System.out.println(s.getName() + s.getMail().toString());
-        }
+        Map<String, List<String>> array = mail.mergerMail(input);
+        array.forEach((k, v) -> System.out.println(k + " " + v));
     }
 }
