@@ -12,15 +12,24 @@ public class EchoServer {
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
-                    String str;
-                    while (!(str = in.readLine()).isEmpty()) {
-                        if (str.contains("=Bye")) {
-                            socket.close();
+                    String str = in.readLine();
+                    int startParam = str.indexOf("=") + 1;
+                    int finishParam = str.lastIndexOf(" ");
+                    String command = str.substring(startParam, finishParam);
+
+                    switch (command) {
+                        case "Hello":
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write("Hello\r\n".getBytes());
                             break;
-                        }
-                        System.out.println(str);
+                        case "Exit":
+                            server.close();
+                            break;
+                        default:
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write((command + "\r\n").getBytes());
                     }
-                    out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
+
                 }
             }
         }
