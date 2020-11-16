@@ -2,6 +2,7 @@ package ru.job4j.serialization.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -11,6 +12,26 @@ public class Factory {
     private int amountOfWorkers;
     private boolean isArmFactory;
     private String[] products;
+
+    public String getName() {
+        return name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public int getAmountOfWorkers() {
+        return amountOfWorkers;
+    }
+
+    public boolean isArmFactory() {
+        return isArmFactory;
+    }
+
+    public String[] getProducts() {
+        return products;
+    }
 
     public Factory(String name, Address address, int amountOfWorkers, boolean isArmFactory, String... products) {
         this.name = name;
@@ -49,5 +70,10 @@ public class Factory {
                         + "}";
         final Factory factoryMod = gson.fromJson(factoryJson, Factory.class);
         System.out.println(factoryMod);
+
+
+        JSONObject jsonObject = new JSONObject(factoryJson);
+        System.out.println(jsonObject);
+        System.out.println(new JSONObject(factory).toString());
     }
 }

@@ -3,6 +3,10 @@ package ru.job4j.serialization.json;
 public class Address {
     private final String address;
 
+    public String getAddress() {
+        return address;
+    }
+
     public Address(String address) {
         this.address = address;
     }
