@@ -1,1 +1,10 @@
 language: java
+
+jdk:
+  - openjdk14
+
+sudo: false
+
+env:
+  global:
+    - CODECOV_TOKEN="4eb5fe3d-5187-4f2a-a3bd-24a1ba1d3e62"
