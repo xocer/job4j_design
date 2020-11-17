@@ -8,12 +8,14 @@ public class Analize {
     public Info diff(List<User> previous, List<User> current) {
         int added = 0;
         int changed = 0;
-        int deleted = 0;
+        int deleted;
 
         if (previous.size() == 0 || current.size() == 0) {
             throw new NoSuchElementException();
         }
-        Map<Integer, String> users = previous.stream().collect(Collectors.toMap(User::getId, User::getName));
+        Map<Integer, String> users = previous.stream()
+                .collect(Collectors
+                        .toMap(User::getId, User::getName));
         for (int i = 0; i < current.size(); i++) {
             int id = current.get(i).getId();
             if (!users.containsKey(id)) {
@@ -48,11 +50,15 @@ public class Analize {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             User user = (User) o;
-            return id == user.id &&
-                    Objects.equals(name, user.name);
+            return id == user.id
+                    && Objects.equals(name, user.name);
         }
 
         @Override
@@ -74,12 +80,16 @@ public class Analize {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             Info info = (Info) o;
-            return added == info.added &&
-                    changed == info.changed &&
-                    deleted == info.deleted;
+            return added == info.added
+                    && changed == info.changed
+                    && deleted == info.deleted;
         }
 
         @Override
@@ -89,17 +99,23 @@ public class Analize {
 
         @Override
         public String toString() {
-            return "Info{" +
-                    "added=" + added +
-                    ", changed=" + changed +
-                    ", deleted=" + deleted +
-                    '}';
+            return "Info{"
+                    + "added=" + added
+                    + ", changed=" + changed
+                    + ", deleted=" + deleted
+                    + '}';
         }
     }
 
     public static void main(String[] args) {
-        List<User> previos = List.of(new User(1, "Вася"), new User(2, "Петя"), new User(3, "Игнат"), new User(4, "Максим"));
-        List<User> current = List.of(new User(1, "Вася"), new User(2, "Даша"), new User(15, "Саша"), new User(19, "Володя"));
+        List<User> previos = List.of(new User(1, "Вася"),
+                new User(2, "Петя"),
+                new User(3, "Игнат"),
+                new User(4, "Максим"));
+        List<User> current = List.of(new User(1, "Вася"),
+                new User(2, "Даша"),
+                new User(15, "Саша"),
+                new User(19, "Володя"));
 
         Analize analize = new Analize();
         Info info = analize.diff(previos, current);
