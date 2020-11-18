@@ -2,12 +2,11 @@ package ru.job4j.collection;
 
 import java.util.*;
 
-public class SimpleList<E> implements Iterable<E>{
+public class SimpleList<E> implements Iterable<E> {
     private int size = 0;
     private int modCount = 0;
     private Node<E> first;
     private Node<E> last;
-
 
     public void add(E value) {
         final Node<E> l = last;
@@ -42,9 +41,9 @@ public class SimpleList<E> implements Iterable<E>{
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
-            Node<E> point = first;
+            private Node<E> point = first;
 
-            int expectedModCount = modCount;
+            private int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
@@ -66,10 +65,9 @@ public class SimpleList<E> implements Iterable<E>{
         };
     }
 
-
     public class Node<E> {
-        E element;
-        Node<E> next;
+        private E element;
+        private Node<E> next;
 
         public Node(E element, Node<E> next) {
             this.element = element;

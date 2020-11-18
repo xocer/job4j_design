@@ -12,10 +12,10 @@ public class EvenNumberFile {
                 text.append((char) read);
             }
             String[] lines = text.toString().split(System.lineSeparator());
-            for (String s :
-                    lines) {
+            for (String s : lines) {
                 int i = Integer.parseInt(s);
-                System.out.println("Число " + i + " является " + (i % 2 == 0 ? "четныем" : "нечетным"));
+                System.out.println("Число " + i + " является "
+                        + (i % 2 == 0 ? "четныем" : "нечетным"));
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,6 +13,15 @@ public class Factory {
     private boolean isArmFactory;
     private String[] products;
 
+    public Factory(String name, Address address, int amountOfWorkers,
+                   boolean isArmFactory, String... products) {
+        this.name = name;
+        this.address = address;
+        this.amountOfWorkers = amountOfWorkers;
+        this.isArmFactory = isArmFactory;
+        this.products = products;
+    }
+
     public String getName() {
         return name;
     }
@@ -33,27 +42,20 @@ public class Factory {
         return products;
     }
 
-    public Factory(String name, Address address, int amountOfWorkers, boolean isArmFactory, String... products) {
-        this.name = name;
-        this.address = address;
-        this.amountOfWorkers = amountOfWorkers;
-        this.isArmFactory = isArmFactory;
-        this.products = products;
-    }
-
     @Override
     public String toString() {
-        return "Factory{" +
-                "name='" + name + '\'' +
-                ", address=" + address +
-                ", amountOfWorkers=" + amountOfWorkers +
-                ", isArmFactory=" + isArmFactory +
-                ", products=" + Arrays.toString(products) +
-                '}';
+        return "Factory{"
+                + "name='" + name + '\''
+                + ", address=" + address
+                + ", amountOfWorkers=" + amountOfWorkers
+                + ", isArmFactory=" + isArmFactory
+                + ", products=" + Arrays.toString(products)
+                + '}';
     }
 
     public static void main(String[] args) {
-        Factory factory = new Factory("Силовые машины", new Address("Свердловская набережная 5"), 700, true, "turbines");
+        Factory factory = new Factory("Силовые машины", new Address("Свердловская набережная 5"),
+                700, true, "turbines");
         Gson gson = new GsonBuilder().create();
         System.out.println(gson.toJson(factory));
 
@@ -70,7 +72,6 @@ public class Factory {
                         + "}";
         final Factory factoryMod = gson.fromJson(factoryJson, Factory.class);
         System.out.println(factoryMod);
-
 
         JSONObject jsonObject = new JSONObject(factoryJson);
         System.out.println(jsonObject);

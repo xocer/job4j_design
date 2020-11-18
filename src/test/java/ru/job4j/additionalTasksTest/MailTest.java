@@ -1,7 +1,7 @@
 package ru.job4j.additionalTasksTest;
 
 import org.junit.Test;
-import ru.job4j.additionalTasks.Mail;
+import ru.job4j.additional.tasks.Mail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 

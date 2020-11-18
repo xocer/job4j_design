@@ -75,13 +75,22 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
     }
 
     class Node<K, V> {
-        K key;
-        V value;
+        private K key;
+        private V value;
+
+        public Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             Node<?, ?> node = (Node<?, ?>) o;
             return Objects.equals(key, node.key);
         }
@@ -89,11 +98,6 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
         @Override
         public int hashCode() {
             return Objects.hash(key);
-        }
-
-        public Node(K key, V value) {
-            this.key = key;
-            this.value = value;
         }
     }
 }

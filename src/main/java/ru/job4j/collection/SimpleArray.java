@@ -4,17 +4,16 @@ import java.util.*;
 
 public class SimpleArray<T> implements Iterable<T> {
     private transient Object[] container = new Object[10];
+    private int size;
+    private int modCount;
+    private int point = 0;
 
     public int getSize() {
         return size;
     }
 
-    private int size;
-    private int modCount;
-    private int point = 0;
-
     public void grow(Object[] array) {
-        Arrays.copyOf(array, (int)((array.length * 1.5) + 1));
+        Arrays.copyOf(array, (int) ((array.length * 1.5) + 1));
     }
 
     public T get(int index) {
@@ -29,7 +28,6 @@ public class SimpleArray<T> implements Iterable<T> {
         container[size++] = model;
         modCount++;
     }
-
 
     @Override
     public Iterator<T> iterator() {

@@ -18,12 +18,16 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return children == user.children &&
-                name.equals(user.name) &&
-                birthday.equals(user.birthday);
+        return children == user.children
+                && name.equals(user.name)
+                && birthday.equals(user.birthday);
     }
 
     @Override
@@ -50,16 +54,5 @@ public class User {
         map.put(user2, new Object());
 
         System.out.println(123456789 & 15);
-
-//        String test = binary(123456789);
-//
-//        System.out.println(test);
-//        System.out.println(binary(123456789 >>> 16));
-//        System.out.println(0000111010110111100110100010101 ^ 00000000000000000000111 01011011 >>> 16);
-
-//        System.out.println(user1.hashCode());
-//        for (Map.Entry<User, Object> q : map.entrySet()) {
-//            System.out.println(q.getKey() + " " + q.getValue());
-//        }
     }
 }

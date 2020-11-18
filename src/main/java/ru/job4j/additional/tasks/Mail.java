@@ -1,8 +1,6 @@
-package ru.job4j.additionalTasks;
+package ru.job4j.additional.tasks;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Mail {
 
@@ -18,13 +16,15 @@ public class Mail {
             for (String mail : entry.getValue()) {
                 String otherUser = emailAndUser.putIfAbsent(mail, user);
                 if (otherUser != null) {
-                    userAndUser.put(user, Optional.ofNullable(userAndUser.get(otherUser)).orElse(otherUser));
+                    userAndUser.put(user, Optional.ofNullable(userAndUser.get(otherUser))
+                            .orElse(otherUser));
                 }
             }
         }
         Map<String, List<String>> result = new HashMap<>();
         for (Map.Entry<String, String> entry : emailAndUser.entrySet()) {
-            String key = Optional.ofNullable(userAndUser.get(entry.getValue())).orElse(entry.getValue());
+            String key = Optional.ofNullable(userAndUser.get(entry.getValue()))
+                    .orElse(entry.getValue());
             String value = entry.getKey();
             if (result.containsKey(key)) {
                 result.get(key).add(value);

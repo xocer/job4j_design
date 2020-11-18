@@ -10,11 +10,14 @@ public class Zip {
     private Path rootPath;
 
     public void packFiles(List<Path> sources, File target) throws IOException {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(rootPath + "\\" + target)))) {
+        try (ZipOutputStream zip = new ZipOutputStream(
+                new BufferedOutputStream(
+                        new FileOutputStream(rootPath + "\\" + target)))) {
             for (Path tmp : sources) {
                 Path currentPath = rootPath.relativize(tmp);
                 zip.putNextEntry(new ZipEntry(currentPath.toString()));
-                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(tmp.toString()))) {
+                try (BufferedInputStream out = new BufferedInputStream(
+                        new FileInputStream(tmp.toString()))) {
                     zip.write(out.readAllBytes());
                 }
             }
@@ -24,7 +27,9 @@ public class Zip {
         }
 
     public void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
+        try (ZipOutputStream zip = new ZipOutputStream(
+                new BufferedOutputStream(
+                        new FileOutputStream(target)))) {
             zip.putNextEntry(new ZipEntry(source.getPath()));
             try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
                 zip.write(out.readAllBytes());

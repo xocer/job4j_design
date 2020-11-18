@@ -7,11 +7,11 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ConsoleChat {
-    private final String path;
-    private final String botAnswers;
     private static final String OUT = "закончить";
     private static final String STOP = "стоп";
     private static final String CONTINUE = "продолжить";
+    private final String path;
+    private final String botAnswers;
 
     public ConsoleChat(String path, String botAnswers) {
         this.path = path;
@@ -19,8 +19,12 @@ public class ConsoleChat {
     }
 
     public void run() {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, Charset.forName("UTF-8")));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(path, Charset.forName("UTF-8")))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(
+                        System.in, Charset.forName("UTF-8")));
+                BufferedWriter writer = new BufferedWriter(
+                        new FileWriter(
+                                path, Charset.forName("UTF-8")))) {
             String userMessage = reader.readLine();
             String answerToUser;
             String separ = System.lineSeparator();
@@ -49,7 +53,9 @@ public class ConsoleChat {
 
     private String getBotAnswer() {
         String answer = null;
-        try (BufferedReader reader = new BufferedReader(new FileReader(botAnswers, Charset.forName("UTF-8")))) {
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(
+                        botAnswers, Charset.forName("UTF-8")))) {
             List<String> arrayAnswers = reader.lines().collect(Collectors.toList());
             Random random = new Random();
             int resultRandom = random.nextInt(arrayAnswers.size() - 1);
