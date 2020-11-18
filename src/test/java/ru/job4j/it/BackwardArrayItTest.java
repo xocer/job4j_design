@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 
 public class BackwardArrayItTest {
 
-
     @Test
     public void whenMultiCallhasNextThenTrue() {
         BackwardArrayIt it = new BackwardArrayIt(

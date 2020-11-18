@@ -43,7 +43,7 @@ public class ListUtilsTest {
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
         Predicate<Integer> predicate = (i) -> i == 2;
         list = ListUtils.removeIf(list, predicate);
-        assertThat(Arrays.asList(1,3), Is.is(list));
+        assertThat(Arrays.asList(1, 3), Is.is(list));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ListUtilsTest {
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 2));
         Predicate<Integer> predicate = (i) -> i == 2;
         list = ListUtils.replaceIf(list, predicate, 5);
-        assertThat(Arrays.asList(1,5, 3, 4, 5), Is.is(list));
+        assertThat(Arrays.asList(1, 5, 3, 4, 5), Is.is(list));
     }
 
     @Test

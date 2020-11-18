@@ -1,4 +1,4 @@
-package ru.job4j.additionalTasksTest;
+package ru.job4j.additional.tasks;
 
 import org.junit.Test;
 import ru.job4j.additional.tasks.Mail;
