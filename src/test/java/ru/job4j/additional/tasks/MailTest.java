@@ -26,7 +26,10 @@ public class MailTest {
         input = mail.mergerMail(input);
 
         Map<String, List<String>> tmp = new HashMap<>();
-        tmp.put("user1", List.of("aaa@bbb.ru", "ups@pisem.net", "lol@mail.ru", "xxx@ya.ru", "foo@gmail.com"));
+        tmp.put("user1", List.of("aaa@bbb.ru",
+                "ups@pisem.net",
+                "lol@mail.ru", "xxx@ya.ru",
+                "foo@gmail.com"));
         tmp.put("user5", List.of("vasya@pupkin.com", "xyz@pisem.net"));
 
         assertThat(input.equals(tmp), is(true));
