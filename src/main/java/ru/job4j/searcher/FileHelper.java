@@ -7,58 +7,17 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class FileHelper extends SimpleFileVisitor<Path> {
-    private String[] keys;
-    private Path sourse;
-    private String output;
-    private String fileName;
-    private String searchRule;
+    private Predicate<Path> predicate;
     private List<Path> pathList = new ArrayList<>();
 
-    public FileHelper(String[] keys) {
-        if (keys.length > 6) {
-            this.keys = keys;
-            fileName = keys[3];
-            searchRule = keys[4];
-            output = keys[6];
-        }
+    public FileHelper(Predicate<Path> predicate) {
+        this.predicate = predicate;
     }
 
-    public Path getSourse() throws IOException {
-        Path tmp = Paths.get(keys[1]);
-        if (Files.isDirectory(tmp)) {
-            sourse = tmp;
-        } else {
-            throw new IOException("Путь не является директорией");
-        }
-        return sourse;
-    }
-
-    private void checkFile(Path file) {
-        switch (searchRule) {
-            case "-m":
-                if (file.toString().endsWith(fileName)) {
-                    pathList.add(file);
-                }
-                break;
-            case "-f":
-                if (file.getFileName().toString().equals(fileName)) {
-                    pathList.add(file);
-                }
-                break;
-            case "-r":
-                String tmp = file.toString();
-                if (tmp.matches(fileName)) {
-                    pathList.add(file);
-                }
-                break;
-            default:
-                System.out.println("Вы задали не правильна формат для поиска файла.");
-        }
-    }
-
-    public void writeFiles() {
+    public void writeFiles(String output) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(output))) {
             for (Path tmp : pathList) {
                 writer.write(tmp.toString() + System.lineSeparator());
@@ -69,8 +28,10 @@ public class FileHelper extends SimpleFileVisitor<Path> {
     }
 
     @Override
-    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        checkFile(file);
+    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+        if (predicate.test(file)) {
+            pathList.add(file);
+        }
         return FileVisitResult.CONTINUE;
     }
 }
