@@ -1,13 +1,41 @@
-create database cars;
-create table cars (
-    id serial primary key,
-    class varchar,
-    weight int,
-    yearOfIssue date
-);
-insert into cars (class, weight, yearOfIssue) VALUES ('S-class', 2000, '2019-02-01');
-insert into cars (class, weight, yearOfIssue) VALUES ('C-class', 1750, '2015-04-05');
-update cars set class = 'B-class';
-delete from cars;
+create database treker_db;
 
-select * from cars;
+create table users(
+    id serial primary key,
+    name text
+);
+
+create table role (
+    id serial primary key ,
+    name text
+);
+
+create table rules (
+    id serial primary key ,
+    name text
+);
+
+create table item (
+    id serial primary key ,
+    name text
+);
+
+create table comments (
+    id serial primary key ,
+    name text
+);
+
+create table attachs (
+    id serial primary key ,
+    name text
+);
+
+create table category (
+    id serial primary key ,
+    name text
+);
+
+create table state (
+    id serial primary key ,
+    name text
+);
