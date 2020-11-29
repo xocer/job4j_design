@@ -35,7 +35,7 @@ select * from product where name like '%мороженное%' or name like '%м
 --3
 select * from product where expired_date <= current_date + interval '1 month';
 --4
-select * from product order by price desc limit 1;
+select name, price from product where price = (select max(price) from product);
 --5
 select type.name, count(type.name) from type join product p on type.id = p.type_id group by type.name;
 --6
