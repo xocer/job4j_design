@@ -31,9 +31,9 @@ insert into product (name, type_id, expired_date, price) VALUES ('Маасдам
 select * from product as p join type t on p.type_id = t.id
 where t.name = 'сыр';
 --2
-select * from product where name like '%мороженное%' or name like '%мороженное' or name like 'мороженное%';
+select * from product where name like '%мороженное%';
 --3
-select * from product where expired_date <= current_date + interval '1 month';
+select * from product where expired_date = current_date + interval '1 month';
 --4
 select name, price from product where price = (select max(price) from product);
 --5
