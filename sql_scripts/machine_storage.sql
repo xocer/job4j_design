@@ -43,5 +43,8 @@ select c.name as Марка, cb.name as Кузов, e.name as Двигатель
 from car as c
     join car_body cb on c.car_body_id = cb.id
     join engine e on c.engine_id = e.id
-    join transmission t on c.transmission_id = t.id
-group by c.name, cb.name, e.name, t.name;
+    join transmission t on c.transmission_id = t.id;
+
+select cb.id, cb.name from car_body cb left join car c on cb.id = c.car_body_id where c.name is null;
+select e.id, e.name from engine e left join car c on e.id = c.car_body_id where c.name is null;
+select t.id, t.name from transmission t left join car c on t.id = c.car_body_id where c.name is null;
