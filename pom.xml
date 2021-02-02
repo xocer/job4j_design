@@ -12,8 +12,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.source>14</maven.compiler.source>
-    <maven.compiler.target>14</maven.compiler.target>
+    <maven.compiler.source>15</maven.compiler.source>
+    <maven.compiler.target>15</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -54,6 +54,15 @@
       <artifactId>postgresql</artifactId>
       <version>42.2.18</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.18</version>
+      <scope>provided</scope>
+    </dependency>
+
 
   </dependencies>
 
@@ -96,6 +105,27 @@
             <goals>
               <goal>report</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>duplicatesFinder</finalName>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>ru.job4j.io.duplicates.DuplicatesFinder</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
           </execution>
         </executions>
       </plugin>
